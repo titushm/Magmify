@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Assets\magmify.ico</ApplicationIcon>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\magmify.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\Themes\Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Themes\Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Assets\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Strings\en.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Strings\zh.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Strings\es.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Strings\fr.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Strings\de.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Strings\ru.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Resources\Strings\ja.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.28" />
+    <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
+    <PackageReference Include="TaskScheduler" Version="2.12.2" />
+    <PackageReference Include="WPF-UI" Version="4.0.3" />
+    <PackageReference Include="WPF-UI.Tray" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Assets\magmify.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Management">
+      <HintPath>bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Management.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

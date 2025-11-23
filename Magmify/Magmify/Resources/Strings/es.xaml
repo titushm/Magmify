@@ -1,0 +1,55 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+	<!-- App Strings -->
+	<system:String x:Key="App.Name">Magmify</system:String>
+
+	<!-- Page Titles -->
+	<system:String x:Key="Page.Zoom.Title">Ampliar</system:String>
+	<system:String x:Key="Page.Settings.Title">Configuración</system:String>
+
+	<!-- Labels and Buttons -->
+	<system:String x:Key="Label.ZoomConfiguration">Configuración de Zoom</system:String>
+	<system:String x:Key="Label.ConfigureZoom">Configura el comportamiento y los ajustes visuales del zoom</system:String>
+	<system:String x:Key="Label.Keybinding">Asignación de teclas</system:String>
+	<system:String x:Key="Button.Save">Guardar</system:String>
+	<system:String x:Key="Button.Save.Secret">Guardar</system:String>
+	<system:String x:Key="Label.Unsaved">*No guardado</system:String>
+	<system:String x:Key="Label.KeyMode">Modo de tecla</system:String>
+	<system:String x:Key="ComboBoxItem.Hold">Mantener</system:String>
+	<system:String x:Key="ComboBoxItem.Toggle">Alternar</system:String>
+	<system:String x:Key="Label.ZoomMultiplier">Multiplicador de Zoom</system:String>
+	<system:String x:Key="Label.ZoomSensitivity">Sensibilidad de Zoom</system:String>
+	<system:String x:Key="Label.ScrollZoom">Zoom de desplazamiento</system:String>
+	<system:String x:Key="ToggleSwitch.On.Enabled">Habilitado</system:String>
+	<system:String x:Key="ToggleSwitch.Off.Disabled">Deshabilitado</system:String>
+	<system:String x:Key="Label.HandVisibility">Visibilidad de la mano</system:String>
+	<system:String x:Key="Label.HudVisibility">Visibilidad del HUD</system:String>
+	<system:String x:Key="Label.ZoomAnimation">Animación de Zoom</system:String>
+	<system:String x:Key="ComboBoxItem.None">Ninguno</system:String>
+	<system:String x:Key="ComboBoxItem.EaseInOut">Suavizado Entrada-Salida</system:String>
+	<system:String x:Key="ComboBoxItem.Elastic">Elástico</system:String>
+	<system:String x:Key="Label.Theme">Tema</system:String>
+	<system:String x:Key="ComboBoxItem.Light">Claro</system:String>
+	<system:String x:Key="ComboBoxItem.Dark">Oscuro</system:String>
+	<system:String x:Key="Label.RunOnStartup">Ejecutar al iniciar</system:String>
+	<system:String x:Key="Label.CloseToTray">Cerrar a la bandeja</system:String>
+	<system:String x:Key="Label.StartHidden">Iniciar oculto</system:String>
+	<system:String x:Key="Label.AppInfo">Información de la aplicación</system:String>
+	<system:String x:Key="Label.AppVersion">Versión de la aplicación: v</system:String>
+	<system:String x:Key="Label.IconsBy">Íconos por</system:String>
+	<system:String x:Key="Hyperlink.EvaIcons">Íconos Eva</system:String>
+	<system:String x:Key="Label.Debug">Depurar</system:String>
+	<system:String x:Key="Button.OpenLogFile">Abrir archivo de registro</system:String>
+	<system:String x:Key="Label.Status">Estado:</system:String>
+	<system:String x:Key="Label.Connected">Conectado</system:String>
+	<system:String x:Key="MenuItem.Exit">Salir</system:String>
+	<system:String x:Key="Label.Language">Idioma</system:String>
+	<system:String x:Key="Label.Hotkeys">Teclas rápidas</system:String>
+	<system:String x:Key="Label.Customisation">Personalización</system:String>
+	<system:String x:Key="ToggleSwitch.Off.Hidden">Oculto</system:String>
+	<system:String x:Key="ToggleSwitch.On.Visible">Visible</system:String>
+	<system:String x:Key="Label.ConfigureSettings">Configurar ajustes</system:String>
+
+</ResourceDictionary>

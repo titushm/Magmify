@@ -1,0 +1,79 @@
+﻿<ui:FluentWindow x:Class="Magmify.MainWindow"
+				xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+				xmlns:pages="clr-namespace:Magmify.Pages"
+				xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
+				xmlns:models="clr-namespace:Magmify.Models"
+				mc:Ignorable="d" FontFamily="Segoe UI"
+				Loaded="MainWindow_OnLoaded"
+				Closing="MainWindow_OnClosing"
+				Icon="Resources/Assets/magmify.ico" Title="{x:Static models:Info.AppName}" Height="457" Width="800"
+				MaxWidth="800" ResizeMode="NoResize" Foreground="{DynamicResource Text.Foreground}" WindowStyle="None">
+
+	<StackPanel Background="{DynamicResource Window.Background}">
+		<tray:NotifyIcon
+			LeftClick="NotifyIcon_OnLeftClick"
+			Icon="Resources/Assets/magmify.ico"
+			MenuOnRightClick="True"
+			TooltipText="{DynamicResource App.Name}">
+			<tray:NotifyIcon.Menu>
+				<ContextMenu>
+					<MenuItem Header="Exit" Click="Exit_OnClick"/>
+				</ContextMenu>
+
+			</tray:NotifyIcon.Menu>
+
+		</tray:NotifyIcon>
+
+		<ui:TitleBar Title="{x:Static models:Info.AppName}" ShowMaximize="False" Height="40">
+			<ui:TitleBar.Icon>
+				<ui:ImageIcon Source="Resources/Assets/magmify.ico"/>
+			</ui:TitleBar.Icon>
+		</ui:TitleBar>
+
+		<ui:NavigationView PaneDisplayMode="LeftFluent" Height="380" Name="MainNavigationView">
+			<ui:NavigationView.MenuItems>
+				<ui:NavigationViewItem FontWeight="Regular" Content="{DynamicResource Page.Zoom.Title}"
+										TargetPageType="{x:Type pages:Zoom}">
+					<ui:NavigationViewItem.Icon>
+						<ui:ImageIcon Source="{DynamicResource ExpandIcon}" Width="25" Height="25"/>
+					</ui:NavigationViewItem.Icon>
+				</ui:NavigationViewItem>
+
+			</ui:NavigationView.MenuItems>
+
+			<ui:NavigationView.FooterMenuItems>
+				<ui:NavigationViewItem FontWeight="Regular" Content="{DynamicResource Page.Settings.Title}"
+										TargetPageType="{x:Type pages:Settings}">
+					<ui:NavigationViewItem.Icon>
+						<ui:ImageIcon Source="{DynamicResource SettingsIcon}" Width="25" Height="25"/>
+					</ui:NavigationViewItem.Icon>
+				</ui:NavigationViewItem>
+			</ui:NavigationView.FooterMenuItems>
+		</ui:NavigationView>
+
+		<Border Margin="0 5 0 0" Padding="10 0 10 0" Background="{DynamicResource StatusBar.Background}"
+				BorderBrush="{DynamicResource StatusBar.Border}" BorderThickness="1">
+			<DockPanel Height="30">
+
+				<ui:TextBlock DockPanel.Dock="Right" FontWeight="SemiBold" VerticalAlignment="Center"
+							Foreground="{DynamicResource Text.Secondary.Foreground}"
+							Text="{x:Static models:Info.AppVersion}"/>
+				<ui:TextBlock DockPanel.Dock="Right" FontWeight="SemiBold" VerticalAlignment="Center"
+							Foreground="{DynamicResource Text.Secondary.Foreground}" Margin="0 0 0 0">
+					v
+				</ui:TextBlock>
+				<ui:TextBlock VerticalAlignment="Center" FontWeight="SemiBold"
+							Foreground="{DynamicResource Text.Secondary.Foreground}" Margin="0 0 3 0" Text="{DynamicResource Label.Status}"/>
+				<ui:TextBlock VerticalAlignment="Center" FontWeight="SemiBold"
+							Foreground="{DynamicResource Text.Secondary.Foreground}" Text="{DynamicResource Label.Connected}"/>
+
+
+			</DockPanel>
+		</Border>
+
+	</StackPanel>
+</ui:FluentWindow>

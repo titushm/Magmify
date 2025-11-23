@@ -1,0 +1,119 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<DrawingImage x:Key="SettingsIcon">
+		<DrawingImage.Drawing>
+			<DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Opacity="1">
+						<GeometryDrawing>
+							<GeometryDrawing.Geometry>
+								<RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,24,24"/>
+							</GeometryDrawing.Geometry>
+						</GeometryDrawing>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M8.61,22A2.25,2.25,0,0,1,7.26,21.54L5.19,20A2.37,2.37,0,0,1,4.7,16.78A2.06,2.06,0,0,0,4.93,14.92L4.87,14.76A1.83,1.83,0,0,0,3.75,13.54L3.59,13.54A2.34,2.34,0,0,1,2.11,10.6L2.93,8A2.18,2.18,0,0,1,4.05,6.59A2.14,2.14,0,0,1,5.73,6.47A1.93,1.93,0,0,0,7.51,6.18L7.64,6.08A1.94,1.94,0,0,0,8.37,4.57L8.37,4.33A2.32,2.32,0,0,1,10.66,2L13.21,2A2.26,2.26,0,0,1,14.81,2.67A2.37,2.37,0,0,1,15.49,4.35L15.49,4.63A1.76,1.76,0,0,0,16.18,6.06L16.29,6.14A1.74,1.74,0,0,0,17.88,6.4L18.22,6.29A2.26,2.26,0,0,1,21.1,7.8L21.89,10.32A2.36,2.36,0,0,1,20.43,13.25L20.23,13.32A1.89,1.89,0,0,0,19,14.6A2,2,0,0,0,19.25,16.25L19.51,16.63A2.38,2.38,0,0,1,19.01,19.86L17,21.41A2.24,2.24,0,0,1,13.78,20.88L13.66,20.71A1.75,1.75,0,0,0,12.16,19.93A1.8,1.8,0,0,0,10.73,20.7L10.5,21.03A2.25,2.25,0,0,1,9,22A2,2,0,0,1,8.61,22z M4.4,11.62A3.83,3.83,0,0,1,6.78,14.12L6.78,14.24A4,4,0,0,1,6.32,17.86A0.38,0.38,0,0,0,6.32,18.37L8.47,20A0.25,0.25,0,0,0,8.84,19.93L9.07,19.6A3.77,3.77,0,0,1,15.27,19.6L15.39,19.78A0.3,0.3,0,0,0,15.57,19.9A0.25,0.25,0,0,0,15.76,19.85L17.82,18.29A0.36,0.36,0,0,0,17.89,17.8L17.63,17.42A4,4,0,0,1,17.1,14A3.92,3.92,0,0,1,19.59,11.39L19.79,11.32A0.34,0.34,0,0,0,19.98,10.88L19.2,8.39A0.35,0.35,0,0,0,19,8.2A0.21,0.21,0,0,0,18.81,8.2L18.47,8.31A3.74,3.74,0,0,1,15.04,7.74L15,7.65A3.76,3.76,0,0,1,13.51,4.65L13.51,4.34A0.37,0.37,0,0,0,13.41,4.08A0.31,0.31,0,0,0,13.2,4L10.66,4A0.31,0.31,0,0,0,10.37,4.33L10.37,4.58A3.9,3.9,0,0,1,8.85,7.67L8.72,7.77A3.91,3.91,0,0,1,5.09,8.36A0.22,0.22,0,0,0,4.95,8.36A0.28,0.28,0,0,0,4.83,8.51L4,11.12A0.36,0.36,0,0,0,4.22,11.57z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M12,15.5A3.5,3.5,0,1,1,15.5,12A3.5,3.5,0,0,1,12,15.5z M12,10.5A1.5,1.5,0,1,0,13.5,12A1.5,1.5,0,0,0,12,10.5z"/>
+					</DrawingGroup>
+				</DrawingGroup>
+			</DrawingGroup>
+		</DrawingImage.Drawing>
+	</DrawingImage>
+
+	<DrawingImage x:Key="SunIcon">
+		<DrawingImage.Drawing>
+			<DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Opacity="1">
+						<DrawingGroup Transform="-1,1.22460635382238E-16,-1.22460635382238E-16,-1,24,24">
+							<GeometryDrawing>
+								<GeometryDrawing.Geometry>
+									<RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,24,24"/>
+								</GeometryDrawing.Geometry>
+							</GeometryDrawing>
+						</DrawingGroup>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M12,6A1,1,0,0,0,13,5L13,3A1,1,0,0,0,11,3L11,5A1,1,0,0,0,12,6z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M21,11L19,11A1,1,0,0,0,19,13L21,13A1,1,0,0,0,21,11z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M6,12A1,1,0,0,0,5,11L3,11A1,1,0,0,0,3,13L5,13A1,1,0,0,0,6,12z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M6.22,5A1,1,0,0,0,4.83,6.47L6.27,7.86A1,1,0,0,0,7,8.14A1,1,0,0,0,7.72,7.83A1,1,0,0,0,7.72,6.42z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M17,8.14A1,1,0,0,0,17.69,7.86L19.13,6.47A1,1,0,0,0,17.78,5L16.34,6.42A1,1,0,0,0,16.34,7.83A1,1,0,0,0,17,8.14z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M12,18A1,1,0,0,0,11,19L11,21A1,1,0,0,0,13,21L13,19A1,1,0,0,0,12,18z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M17.73,16.14A1,1,0,0,0,16.34,17.58L17.78,19A1,1,0,0,0,18.47,19.28A1,1,0,0,0,19.19,18.98A1,1,0,0,0,19.19,17.56z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M6.27,16.14L4.83,17.53A1,1,0,0,0,4.83,18.95A1,1,0,0,0,5.55,19.25A1,1,0,0,0,6.22,19L7.66,17.61A1,1,0,0,0,6.27,16.17z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M12,8A4,4,0,1,0,16,12A4,4,0,0,0,12,8z M12,14A2,2,0,1,1,14,12A2,2,0,0,1,12,14z"/>
+					</DrawingGroup>
+				</DrawingGroup>
+			</DrawingGroup>
+		</DrawingImage.Drawing>
+	</DrawingImage>
+
+	<DrawingImage x:Key="MoonIcon">
+		<DrawingImage.Drawing>
+			<DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Opacity="1">
+						<GeometryDrawing>
+							<GeometryDrawing.Geometry>
+								<RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,24,24"/>
+							</GeometryDrawing.Geometry>
+						</GeometryDrawing>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M12.3,22L12.2,22A10.31,10.31,0,0,1,4.86,18.85A10.46,10.46,0,0,1,4.6,4.85A10.13,10.13,0,0,1,8.6,2.11A1,1,0,0,1,9.66,2.33A1,1,0,0,1,9.9,3.33A8.4,8.4,0,0,0,11.84,12.14A8.47,8.47,0,0,0,20.67,14.08A1,1,0,0,1,21.94,15.37A10.16,10.16,0,0,1,19.6,19A10.28,10.28,0,0,1,12.3,22z M7.46,4.92A7.93,7.93,0,0,0,6.09,6.14A8.44,8.44,0,0,0,6.29,17.46A8.29,8.29,0,0,0,12.22,20L12.3,20A8.34,8.34,0,0,0,19.08,16.51A10.37,10.37,0,0,1,7.46,4.92z"/>
+					</DrawingGroup>
+				</DrawingGroup>
+			</DrawingGroup>
+		</DrawingImage.Drawing>
+	</DrawingImage>
+
+	<DrawingImage x:Key="EyeIcon">
+		<DrawingImage.Drawing>
+			<DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Opacity="1">
+						<GeometryDrawing>
+							<GeometryDrawing.Geometry>
+								<RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,24,24"/>
+							</GeometryDrawing.Geometry>
+						</GeometryDrawing>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M21.87,11.5C21.23,10.39 17.71,4.82 11.73,5 6.2,5.14 3,10 2.13,11.5A1,1,0,0,0,2.13,12.5C2.76,13.59,6.13,19,12.02,19L12.27,19C17.8,18.86,21.01,14,21.87,12.5A1,1,0,0,0,21.87,11.5z M12.22,17C7.91,17.1 5.1,13.41 4.22,12 5.22,10.39 7.83,7.1 11.83,7 16.12,6.89 18.94,10.59 19.83,12 18.8,13.61 16.22,16.9 12.22,17z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M12,8.5A3.5,3.5,0,1,0,15.5,12A3.5,3.5,0,0,0,12,8.5z M12,13.5A1.5,1.5,0,1,1,13.5,12A1.5,1.5,0,0,1,12,13.5z"/>
+					</DrawingGroup>
+				</DrawingGroup>
+			</DrawingGroup>
+		</DrawingImage.Drawing>
+	</DrawingImage>
+
+	<DrawingImage x:Key="ExpandIcon">
+		<DrawingImage.Drawing>
+			<DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+				<DrawingGroup Opacity="1">
+					<DrawingGroup Opacity="1">
+						<DrawingGroup Transform="-1,1.22460635382238E-16,-1.22460635382238E-16,-1,24,24">
+							<GeometryDrawing>
+								<GeometryDrawing.Geometry>
+									<RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,24,24"/>
+								</GeometryDrawing.Geometry>
+							</GeometryDrawing>
+						</DrawingGroup>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M20,5A1,1,0,0,0,19,4L14,4A1,1,0,0,0,14,6L16.57,6 13.29,9.29A1,1,0,0,0,13.29,10.71A1,1,0,0,0,14.71,10.71L18,7.42 18,10A1,1,0,0,0,19,11A1,1,0,0,0,20,10z"/>
+						<GeometryDrawing Brush="{DynamicResource Text.Foreground}"
+										Geometry="F1 M24,24z M0,0z M10.71,13.29A1,1,0,0,0,9.29,13.29L6,16.57 6,14A1,1,0,0,0,5,13A1,1,0,0,0,4,14L4,19A1,1,0,0,0,5,20L10,20A1,1,0,0,0,10,18L7.42,18 10.71,14.71A1,1,0,0,0,10.71,13.29z"/>
+					</DrawingGroup>
+				</DrawingGroup>
+			</DrawingGroup>
+		</DrawingImage.Drawing>
+	</DrawingImage>
+</ResourceDictionary>

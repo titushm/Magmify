@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+	<!-- App Strings -->
+	<system:String x:Key="App.Name">Magmify</system:String>
+
+	<!-- Page Titles -->
+	<system:String x:Key="Page.Zoom.Title">Увеличение</system:String>
+	<system:String x:Key="Page.Settings.Title">Настройки</system:String>
+
+	<!-- Labels and Buttons -->
+	<system:String x:Key="Label.ZoomConfiguration">Конфигурация увеличения</system:String>
+	<system:String x:Key="Label.ConfigureZoom">Настройте поведение и визуальные параметры увеличения</system:String>
+	<system:String x:Key="Label.Keybinding">Привязка клавиш</system:String>
+	<system:String x:Key="Button.Save">Сохранить</system:String>
+	<system:String x:Key="Button.Save.Secret">Сохранить</system:String>
+	<system:String x:Key="Label.Unsaved">*Не сохранено</system:String>
+	<system:String x:Key="Label.KeyMode">Режим клавиш</system:String>
+	<system:String x:Key="ComboBoxItem.Hold">Удерживать</system:String>
+	<system:String x:Key="ComboBoxItem.Toggle">Переключить</system:String>
+	<system:String x:Key="Label.ZoomMultiplier">Множитель увеличения</system:String>
+	<system:String x:Key="Label.ZoomSensitivity">Чувствительность увеличения</system:String>
+	<system:String x:Key="Label.ScrollZoom">Прокрутка увеличения</system:String>
+	<system:String x:Key="ToggleSwitch.On.Enabled">Включено</system:String>
+	<system:String x:Key="ToggleSwitch.Off.Disabled">Отключено</system:String>
+	<system:String x:Key="Label.HandVisibility">Видимость руки</system:String>
+	<system:String x:Key="Label.HudVisibility">Видимость HUD</system:String>
+	<system:String x:Key="Label.ZoomAnimation">Анимация увеличения</system:String>
+	<system:String x:Key="ComboBoxItem.None">Нет</system:String>
+	<system:String x:Key="ComboBoxItem.EaseInOut">Ease-In-Out</system:String>
+	<system:String x:Key="ComboBoxItem.Elastic">Эластичный</system:String>
+	<system:String x:Key="Label.Theme">Тема</system:String>
+	<system:String x:Key="ComboBoxItem.Light">Светлая</system:String>
+	<system:String x:Key="ComboBoxItem.Dark">Тёмная</system:String>
+	<system:String x:Key="Label.RunOnStartup">Запуск при старте</system:String>
+	<system:String x:Key="Label.CloseToTray">Закрыть в трей</system:String>
+	<system:String x:Key="Label.StartHidden">Запуск в скрытом режиме</system:String>
+	<system:String x:Key="Label.AppInfo">Информация о приложении</system:String>
+	<system:String x:Key="Label.AppVersion">Версия приложения: v</system:String>
+	<system:String x:Key="Label.IconsBy">Иконки от</system:String>
+	<system:String x:Key="Hyperlink.EvaIcons">Иконки Eva</system:String>
+	<system:String x:Key="Label.Debug">Отладка</system:String>
+	<system:String x:Key="Button.OpenLogFile">Открыть файл журнала</system:String>
+	<system:String x:Key="Label.Status">Статус:</system:String>
+	<system:String x:Key="Label.Connected">Подключено</system:String>
+	<system:String x:Key="MenuItem.Exit">Выход</system:String>
+	<system:String x:Key="Label.Language">Язык</system:String>
+	<system:String x:Key="Label.NotSet">Не задано</system:String>
+	<system:String x:Key="ToggleSwitch.Off.Hidden">Скрыто</system:String>
+	<system:String x:Key="ToggleSwitch.On.Visible">Видимо</system:String>
+	<system:String x:Key="Label.ConfigureSettings">Настроить параметры</system:String>
+
+</ResourceDictionary>

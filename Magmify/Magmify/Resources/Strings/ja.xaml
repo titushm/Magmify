@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+	<!-- App Strings -->
+	<system:String x:Key="App.Name">Magmify</system:String>
+
+	<!-- Page Titles -->
+	<system:String x:Key="Page.Zoom.Title">ズーム</system:String>
+	<system:String x:Key="Page.Settings.Title">設定</system:String>
+
+	<!-- Labels and Buttons -->
+	<system:String x:Key="Label.ZoomConfiguration">ズーム設定</system:String>
+	<system:String x:Key="Label.ConfigureZoom">ズームの動作と視覚設定を構成する</system:String>
+	<system:String x:Key="Label.Keybinding">キーのバインディング</system:String>
+	<system:String x:Key="Button.Save">保存</system:String>
+	<system:String x:Key="Button.Save.Secret">保存</system:String>
+	<system:String x:Key="Label.Unsaved">*保存されていません</system:String>
+	<system:String x:Key="Label.KeyMode">キーのモード</system:String>
+	<system:String x:Key="ComboBoxItem.Hold">ホールド</system:String>
+	<system:String x:Key="ComboBoxItem.Toggle">トグル</system:String>
+	<system:String x:Key="Label.ZoomMultiplier">ズーム倍率</system:String>
+	<system:String x:Key="Label.ZoomSensitivity">ズーム感度</system:String>
+	<system:String x:Key="Label.ScrollZoom">スクロールズーム</system:String>
+	<system:String x:Key="ToggleSwitch.On.Enabled">有効</system:String>
+	<system:String x:Key="ToggleSwitch.Off.Disabled">無効</system:String>
+	<system:String x:Key="Label.HandVisibility">手の可視性</system:String>
+	<system:String x:Key="Label.HudVisibility">HUDの可視性</system:String>
+	<system:String x:Key="Label.ZoomAnimation">ズームアニメーション</system:String>
+	<system:String x:Key="ComboBoxItem.None">なし</system:String>
+	<system:String x:Key="ComboBoxItem.EaseInOut">イーズインアウト</system:String>
+	<system:String x:Key="ComboBoxItem.Elastic">弾性</system:String>
+	<system:String x:Key="Label.Theme">テーマ</system:String>
+	<system:String x:Key="ComboBoxItem.Light">ライト</system:String>
+	<system:String x:Key="ComboBoxItem.Dark">ダーク</system:String>
+	<system:String x:Key="Label.RunOnStartup">スタートアップ時に実行</system:String>
+	<system:String x:Key="Label.CloseToTray">トレイに閉じる</system:String>
+	<system:String x:Key="Label.StartHidden">非表示で開始</system:String>
+	<system:String x:Key="Label.AppInfo">アプリ情報</system:String>
+	<system:String x:Key="Label.AppVersion">アプリバージョン: v</system:String>
+	<system:String x:Key="Label.IconsBy">アイコン提供</system:String>
+	<system:String x:Key="Hyperlink.EvaIcons">Evaアイコン</system:String>
+	<system:String x:Key="Label.Debug">デバッグ</system:String>
+	<system:String x:Key="Button.OpenLogFile">ログファイルを開く</system:String>
+	<system:String x:Key="Label.Status">ステータス:</system:String>
+	<system:String x:Key="Label.Connected">接続済み</system:String>
+	<system:String x:Key="MenuItem.Exit">終了</system:String>
+	<system:String x:Key="Label.Language">言語</system:String>
+	<system:String x:Key="Label.NotSet">未設定</system:String>
+	<system:String x:Key="ToggleSwitch.Off.Hidden">非表示</system:String>
+	<system:String x:Key="ToggleSwitch.On.Visible">表示</system:String>
+	<system:String x:Key="Label.ConfigureSettings">設定を構成する</system:String>
+
+</ResourceDictionary>
