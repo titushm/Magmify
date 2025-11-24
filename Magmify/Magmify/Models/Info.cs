@@ -6,13 +6,14 @@ public static class Info {
 	public static string AppName => "Magmify";
 	public static string AppVersion => "1.0.0";
 	public static string AppStartupName => "Magmify Startup";
+	public static string RepoUrl => "https://api.github.com/repos/titushm/Magmify";
+	public static string MinecraftProcessName => "Minecraft.Windows";
 	public static string AppDirectory =>
 		System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "titushm",
 			"Magmify");
 
 	public static readonly string ConfigPath = System.IO.Path.Combine(AppDirectory, "config.json");
 	public static readonly string LogPath = System.IO.Path.Combine(AppDirectory, "log.txt");
-	public const string StringsDir = "Resources/Strings/";
 	public const string IconsResource = "Resources/Assets/Icons.xaml";
 
 	public static readonly Dictionary<string, List<int>> KeybindingModifiers = new() {

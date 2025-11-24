@@ -1,14 +1,18 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Windows.Input;
 using Magmify.Models;
 using Wpf.Ui.Appearance;
+using Wpf.Ui.Controls;
 
 namespace Magmify.Services;
 
 public class HelperService {
 	private static HelperService? _instance;
 	private static readonly object InstanceLock = new();
-
-
+	
 	public static HelperService Instance {
 		get {
 			lock (InstanceLock) {
@@ -20,33 +24,42 @@ public class HelperService {
 			}
 		}
 	}
-	// public static void RegisterZoomHotkey() {
-	// 	var keybinding = Config.ZoomKeybinding;
-	// 	if (keybinding == null) {
-	// 		HotkeyManager.Current.Remove("Zoom");
-	// 		return;
-	// 	}
-	//
-	// 	Key key = KeyInterop.KeyFromVirtualKey(keybinding.VKey);
-	// 	Modifiers modifiers = keybinding.Modifiers;
-	// 	ModifierKeys keys = ModifierKeys.None;
-	// 	if (modifiers.Ctrl) keys |= ModifierKeys.Control;
-	// 	if (modifiers.Alt) keys |= ModifierKeys.Alt;
-	// 	if (modifiers.Shift) keys |= ModifierKeys.Shift;
-	// 	if (modifiers.Win) keys |= ModifierKeys.Windows; // Probably a better way to do this. idc
-	//
-	// 	HotkeyManager.Current.AddOrReplace(
-	// 		"Zoom",
-	// 		key,
-	// 		keys,
-	// 		(sender, e) => {
-	// 			// Perform the hotkey action here
-	// 			// MessageBox.Show("Hotkey pressed!");
-	// 			e.Handled = false; // <-- this allows the key press to go through
-	// 		}); //TODO: NHotkey cant do non blocking... Create custom solution later
-	// 	//TODO: HANDLE GLOBAL APPLICATYION EXCEPTIONS SOMEHOW
-	// }
-
+	
+	public void CheckForUpdates() {
+		try {
+			HttpClient client = new();
+			client.DefaultRequestHeaders.UserAgent.ParseAdd(Info.AppName);
+			GithubRelease? response = client.GetFromJsonAsync<GithubRelease>(Info.RepoUrl + "/releases/latest").Result;
+			if (response == null) return;
+			Version latestVersion = new(response.Tag_Name.TrimStart('v'));
+			if (latestVersion == Config.LastNotifiedVersion) return;
+			Version currentVersion = new(Info.AppVersion);
+			if (latestVersion > currentVersion) {
+				MessageBox msgBox = new() {
+					Title = "Update Available",
+					Content = $"A new version of {Info.AppName} is available!\n\n" +
+					          $"Current version: {Info.AppVersion}\n" +
+					          $"Latest version: {latestVersion}\n\n" +
+					          "Would you like to download the latest version?",
+					IsPrimaryButtonEnabled = true,
+					PrimaryButtonText = "Download",
+					IsSecondaryButtonEnabled = true,
+					SecondaryButtonText = "Skip Update"
+				};
+				MessageBoxResult result = msgBox.ShowDialogAsync().Result;
+				if (result == MessageBoxResult.Primary) {
+					Process.Start(new ProcessStartInfo {
+						FileName = response.Assets[0].Browser_Download_Url,
+						UseShellExecute = true
+					});
+				} else if (result == MessageBoxResult.Secondary) {
+					Config.LastNotifiedVersion = latestVersion;
+				}
+			}
+		} catch {
+			LogService.Instance.Write("Update check failed.");
+		}
+	}
 
 	public void ApplyLanguage(string cultureCode) {
 		try {
@@ -65,7 +78,6 @@ public class HelperService {
 	public void ApplyTheme(bool isDark) {
 		try {
 			ApplicationTheme newTheme = isDark ? ApplicationTheme.Dark : ApplicationTheme.Light;
-
 			List<string> oldResources = ResourceSwitcherService.Instance
 				.OppositeResources(Info.SupportedThemes[newTheme], Info.SupportedThemes.Values.ToList());
 

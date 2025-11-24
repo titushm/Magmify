@@ -16,10 +16,10 @@ namespace Magmify {
 
 		private void MainWindow_OnLoaded(object sender, RoutedEventArgs e) {
 			LogService.Instance.Write("Application started.");
+			HelperService.Instance.CheckForUpdates();
 			HelperService.Instance.ApplyTheme(Config.IsDarkTheme);
 			HelperService.Instance.ApplyLanguage(Config.Language);
-			HotkeyService.Instance.Register(Config.ZoomKeybinding);
-			ZoomService.Instance.StartWatching();
+			KeyService.Instance.RegisterKeybinding(Config.ZoomKeybinding);
 
 			MainNavigationView.Navigate(typeof(Pages.Zoom));
 			if (Config.StartHidden) {

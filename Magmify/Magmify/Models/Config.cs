@@ -9,24 +9,28 @@ public static class Config {
 	public static bool RunOnStartup {
 		get {
 			using TaskService ts = new TaskService();
-			Task? t = ts.FindTask(Info.AppName);
+			Task? t = ts.FindTask(Info.AppStartupName);
 			return t != null;
 		}
 		set {
 			using TaskService ts = new TaskService();
-			TaskDefinition td = ts.NewTask();
-			td.RegistrationInfo.Description = "Launch Magmify elevated at logon";
+			if (value) {
+				TaskDefinition td = ts.NewTask();
+				td.RegistrationInfo.Description = "Launch Magmify elevated at logon";
 
-			td.Triggers.Add(new LogonTrigger());
-			td.Actions.Add(new ExecAction(Process.GetCurrentProcess().MainModule.FileName, null, null));
-			td.Principal.RunLevel = TaskRunLevel.Highest;
-			ts.RootFolder.RegisterTaskDefinition(
-				Info.AppStartupName,
-				td,
-				TaskCreation.CreateOrUpdate,
-				null,
-				null,
-				TaskLogonType.InteractiveToken);
+				td.Triggers.Add(new LogonTrigger());
+				td.Actions.Add(new ExecAction(Process.GetCurrentProcess().MainModule.FileName, null, null));
+				td.Principal.RunLevel = TaskRunLevel.Highest;
+				ts.RootFolder.RegisterTaskDefinition(
+					Info.AppStartupName,
+					td,
+					TaskCreation.CreateOrUpdate,
+					null,
+					null,
+					TaskLogonType.InteractiveToken);
+			} else {
+				ts.RootFolder.DeleteTask(Info.AppStartupName, false);
+			}
 		}
 	}
 
@@ -88,5 +92,10 @@ public static class Config {
 	public static string Language {
 		get => ConfigService.Instance.Get<string>("Language", "en");
 		set => ConfigService.Instance.Set("Language", value);
+	}
+	
+	public static Version LastNotifiedVersion {
+		get => ConfigService.Instance.Get("LastNotifiedVersion", new Version(0, 0, 0));
+		set => ConfigService.Instance.Set("LastNotifiedVersion", value);
 	}
 }

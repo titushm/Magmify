@@ -9,6 +9,11 @@ public sealed class ConfigService {
 	private static readonly object InstanceLock = new();
 	private static readonly object FileLock = new();
 	private static Dictionary<string, JsonElement>? _cache;
+	private readonly JsonSerializerOptions _jsonOptions = new() {
+		WriteIndented = true,
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+		DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+	};
 
 	private ConfigService() {
 		HelperService.EnsureAppDirectory();
@@ -43,9 +48,7 @@ public sealed class ConfigService {
 
 	private void Save() {
 		lock (FileLock) {
-			string json = JsonSerializer.Serialize(_cache, new JsonSerializerOptions {
-				WriteIndented = true
-			});
+			string json = JsonSerializer.Serialize(_cache, _jsonOptions);
 
 			File.WriteAllText(Info.ConfigPath, json);
 		}
@@ -55,7 +58,7 @@ public sealed class ConfigService {
 		Load();
 		if (_cache!.TryGetValue(key, out JsonElement elem)) {
 			try {
-				return elem.Deserialize<T>()!;
+				return elem.Deserialize<T>(_jsonOptions)!;
 			} catch {
 				return defaultValue;
 			}
@@ -66,7 +69,7 @@ public sealed class ConfigService {
 
 	public void Set<T>(string key, T value) {
 		Load();
-		_cache![key] = JsonSerializer.SerializeToElement(value);
+		_cache![key] = JsonSerializer.SerializeToElement(value, _jsonOptions);
 		Save();
 	}
 }
