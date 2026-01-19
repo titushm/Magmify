@@ -1,15 +1,18 @@
 ﻿using System.Diagnostics;
+using System.Runtime.Versioning;
+using Magmify.Models.Extensions;
 using Magmify.Services;
 using Microsoft.Win32.TaskScheduler;
 using Task = Microsoft.Win32.TaskScheduler.Task;
 
 namespace Magmify.Models;
 
+[SupportedOSPlatform("windows7.0")]
 public static class Config {
 	public static bool RunOnStartup {
 		get {
 			using TaskService ts = new TaskService();
-			Task? t = ts.FindTask(Info.AppStartupName);
+			Task? t = ts.FindTask(Constants.AppStartupName);
 			return t != null;
 		}
 		set {
@@ -19,83 +22,134 @@ public static class Config {
 				td.RegistrationInfo.Description = "Launch Magmify elevated at logon";
 
 				td.Triggers.Add(new LogonTrigger());
-				td.Actions.Add(new ExecAction(Process.GetCurrentProcess().MainModule.FileName, null, null));
+
+				if (Process.GetCurrentProcess().MainModule == null) { // Sanity check
+					Logger.Instance.Write("Failed to get current process main module for startup task.");
+					return;
+				}
+
+				td.Actions.Add(new ExecAction(Process.GetCurrentProcess().MainModule!.FileName));
 				td.Principal.RunLevel = TaskRunLevel.Highest;
 				ts.RootFolder.RegisterTaskDefinition(
-					Info.AppStartupName,
+					Constants.AppStartupName,
 					td,
 					TaskCreation.CreateOrUpdate,
 					null,
 					null,
 					TaskLogonType.InteractiveToken);
 			} else {
-				ts.RootFolder.DeleteTask(Info.AppStartupName, false);
+				ts.RootFolder.DeleteTask(Constants.AppStartupName, false);
 			}
 		}
 	}
 
 	public static bool IsDarkTheme {
-		get => ConfigService.Instance.Get("IsDarkTheme", false);
-		set => ConfigService.Instance.Set("IsDarkTheme", value);
+		get => Database.GetDatabase().config.is_dark_theme;
+		set => Database.SetConfigProperty("is_dark_theme", value);
 	}
 
 	public static bool CloseToTray {
-		get => ConfigService.Instance.Get("CloseToTray", false);
-		set => ConfigService.Instance.Set("CloseToTray", value);
+		get => Database.GetDatabase().config.close_to_tray;
+		set {
+			Database.SetConfigProperty("close_to_tray", value);
+			if (!value) return;
+			TrayTipShown = false; // If enabling close to tray, reset tray tip shown so it can show again
+		}
+	}
+	
+	public static bool TrayTipShown {
+		get => Database.GetDatabase().config.tray_tip_shown;
+		set => Database.SetConfigProperty("tray_tip_shown", value);
 	}
 
 	public static bool StartHidden {
-		get => ConfigService.Instance.Get("StartHidden", false);
-		set => ConfigService.Instance.Set("StartHidden", value);
+		get => Database.GetDatabase().config.start_hidden;
+		set => Database.SetConfigProperty("start_hidden", value);
 	}
 
-	public static int KeyMode {
-		get => ConfigService.Instance.Get("KeyMode", 0);
-		set => ConfigService.Instance.Set("KeyMode", value);
+	public static int KeyModeIndex {
+		get => Database.GetDatabase().config.key_mode_index;
+		set => Database.SetConfigProperty("key_mode_index", value);
 	}
 
-	public static float ZoomMultiplier {
-		get => ConfigService.Instance.Get("ZoomMultiplier", 2.0f);
-		set => ConfigService.Instance.Set("ZoomMultiplier", value);
+	public static float ZoomFov {
+		get => Database.GetDatabase().config.zoom_fov;
+		set => Database.SetConfigProperty("zoom_fov", value);
 	}
 
-	public static int ZoomSensitivity {
-		get => ConfigService.Instance.Get("ZoomSensitivity", 50);
-		set => ConfigService.Instance.Set("ZoomSensitivity", value);
+	public static int CameraSensitivity {
+		get => Database.GetDatabase().config.camera_sensitivity;
+		set => Database.SetConfigProperty("camera_sensitivity", value);
 	}
 
-	public static bool ScrollZoom {
-		get => ConfigService.Instance.Get("ScrollZoom", true);
-		set => ConfigService.Instance.Set("ScrollZoom", value);
+	public static bool ScrollAdjust {
+		get => Database.GetDatabase().config.scroll_adjust;
+		set {
+			Database.SetConfigProperty("scroll_adjust", value);
+			if (ZoomKeybinding != null && Minecraft.Instance.IsRunning) HookHandler.SetMouseHookEnabled(value); // Only enable mouse hook if a keybinding is set
+		}
 	}
 
-	public static bool HandVisibility {
-		get => ConfigService.Instance.Get("HandVisibility", true);
-		set => ConfigService.Instance.Set("HandVisibility", value);
+	public static bool HideHand {
+		get => Database.GetDatabase().config.hide_hand;
+		set => Database.SetConfigProperty("hide_hand", value);
 	}
 
-	public static bool HudVisibility {
-		get => ConfigService.Instance.Get("HudVisibility", true);
-		set => ConfigService.Instance.Set("HudVisibility", value);
+	public static bool HideHud {
+		get => Database.GetDatabase().config.hide_hud;
+		set => Database.SetConfigProperty("hide_hud", value);
 	}
 
-	public static int ZoomAnimation {
-		get => ConfigService.Instance.Get("ZoomAnimation", 1);
-		set => ConfigService.Instance.Set("ZoomAnimation", value);
+	public static int ZoomAnimationIndex {
+		get => Database.GetDatabase().config.zoom_animation_index;
+		set => Database.SetConfigProperty("zoom_animation_index", value);
 	}
 
 	public static Keybinding? ZoomKeybinding {
-		get => ConfigService.Instance.Get<Keybinding>("ZoomKeybinding");
-		set => ConfigService.Instance.Set("ZoomKeybinding", value);
+		get => Database.GetDatabase().config.zoom_keybinding?.ToKeybinding();
+		set {
+			Database.SetConfigProperty("zoom_keybinding", value?.ToZoomKeybindingModel());
+			HookHandler.SetKeyboardHookEnabled(value != null && Minecraft.Instance.IsRunning); // Enable or disable keyboard/mouse hook based on whether a keybinding is set
+			if (ScrollAdjust) HookHandler.SetMouseHookEnabled(value != null);
+			HookHandler.CurrentKeybinding = value; // Update current keybinding
+		}
 	}
 
 	public static string Language {
-		get => ConfigService.Instance.Get<string>("Language", "en");
-		set => ConfigService.Instance.Set("Language", value);
+		get => Database.GetDatabase().config.language;
+		set => Database.SetConfigProperty("language", value);
+	}
+
+	public static Version LastNotifiedVersion {
+		get => Database.GetDatabase().config.last_notified_version.ToVersionOrNull();
+		set => Database.SetConfigProperty("last_notified_version", value.ToString());
+	}
+
+	public static string MinecraftInstallPath {
+		get => Database.GetDatabase().config.minecraft_install_path;
+		set => Database.SetConfigProperty("minecraft_install_path", value);
 	}
 	
-	public static Version LastNotifiedVersion {
-		get => ConfigService.Instance.Get("LastNotifiedVersion", new Version(0, 0, 0));
-		set => ConfigService.Instance.Set("LastNotifiedVersion", value);
+	public static int ScrollStep {
+		get => Database.GetDatabase().config.scroll_step;
+		set => Database.SetConfigProperty("scroll_step", value);
+	}
+
+	public static bool ScrollAdjustLock {
+		get => Database.GetDatabase().config.scroll_adjust_lock;
+		set {
+			Database.SetConfigProperty("scroll_adjust_lock", value);
+			Zoom.AdjustedFov = ZoomFov; // Reset adjusted FOV to zoom FOV when changing lock setting
+		}
+	}
+	
+	public static int ZoomAnimationFpsIndex {
+		get => Database.GetDatabase().config.zoom_animation_fps_index;
+		set => Database.SetConfigProperty("zoom_animation_fps_index", value);
+	}
+		
+	public static int ZoomAnimationDuration {
+		get => Database.GetDatabase().config.zoom_animation_duration;
+		set => Database.SetConfigProperty("zoom_animation_duration", value);
 	}
 }

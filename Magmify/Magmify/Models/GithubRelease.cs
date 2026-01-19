@@ -1,17 +1,17 @@
-﻿using System.Diagnostics;
-using Magmify.Services;
-using Microsoft.Win32.TaskScheduler;
-using Task = Microsoft.Win32.TaskScheduler.Task;
-
-namespace Magmify.Models;
+﻿namespace Magmify.Models;
 
 public class GithubRelease {
-	public string Tag_Name { get; set; }
-	public List<GithubAsset> Assets { get; set; }
+	[System.Text.Json.Serialization.JsonPropertyName("tag_name")]
+	public string tag_name { get; set; } = string.Empty;
+
+	[System.Text.Json.Serialization.JsonPropertyName("assets")]
+	public List<ReleaseAsset>? assets { get; set; }
 }
 
-public class GithubAsset {
-	public string Name { get; set; }
-	public string Browser_Download_Url { get; set; }
-	public long Size { get; set; }
+public class ReleaseAsset {
+	[System.Text.Json.Serialization.JsonPropertyName("browser_download_url")]
+	public string browser_download_url { get; set; } = string.Empty;
+
+	[System.Text.Json.Serialization.JsonPropertyName("name")]
+	public string? name { get; set; }
 }

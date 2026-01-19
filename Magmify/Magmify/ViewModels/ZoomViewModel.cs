@@ -1,65 +1,99 @@
 ﻿using System.ComponentModel;
+using System.Runtime.Versioning;
 using Magmify.Models;
 
 namespace Magmify.ViewModels;
 
+[SupportedOSPlatform("windows7.0")]
 public class ZoomViewModel : INotifyPropertyChanged {
 	public int KeyMode {
-		get => Config.KeyMode;
+		get => Config.KeyModeIndex;
 		set {
-			Config.KeyMode = value;
+			Config.KeyModeIndex = value;
 			OnPropertyChanged(nameof(KeyMode));
 		}
 	}
 
-	public float ZoomMultiplier {
-		get => Config.ZoomMultiplier;
+	public float ZoomFov {
+		get => Config.ZoomFov;
 		set {
-			Config.ZoomMultiplier = value;
-			OnPropertyChanged(nameof(ZoomMultiplier));
+			Config.ZoomFov = value;
+			OnPropertyChanged(nameof(ZoomFov));
 		}
 	}
 
-	public int ZoomSensitivity {
-		get => Config.ZoomSensitivity;
+	public int CameraSensitivity {
+		get => Config.CameraSensitivity;
 		set {
-			Config.ZoomSensitivity = value;
-			OnPropertyChanged(nameof(ZoomSensitivity));
+			Config.CameraSensitivity = value;
+			OnPropertyChanged(nameof(CameraSensitivity));
 		}
 	}
 
-	public bool ScrollZoom {
-		get => Config.ScrollZoom;
+	public bool ScrollAdjust {
+		get => Config.ScrollAdjust;
 		set {
-			Config.ScrollZoom = value;
-			OnPropertyChanged(nameof(ScrollZoom));
+			Config.ScrollAdjust = value;
+			OnPropertyChanged(nameof(ScrollAdjust));
 		}
 	}
 
-	public bool HandVisibility {
-		get => Config.HandVisibility;
+	public bool HideHand {
+		get => Config.HideHand;
 		set {
-			Config.HandVisibility = value;
-			OnPropertyChanged(nameof(HandVisibility));
+			Config.HideHand = value;
+			OnPropertyChanged(nameof(HideHand));
 		}
 	}
 
-	public bool HudVisibility {
-		get => Config.HudVisibility;
+	public bool HideHud {
+		get => Config.HideHud;
 		set {
-			Config.HudVisibility = value;
-			OnPropertyChanged(nameof(HudVisibility));
+			Config.HideHud = value;
+			OnPropertyChanged(nameof(HideHud));
 		}
 	}
 
 	public int ZoomAnimation {
-		get => Config.ZoomAnimation;
+		get => Config.ZoomAnimationIndex;
 		set {
-			Config.ZoomAnimation = value;
+			Config.ZoomAnimationIndex = value;
 			OnPropertyChanged(nameof(ZoomAnimation));
 		}
 	}
+	
+	public int ScrollStep {
+		get => Config.ScrollStep;
+		set {
+			Config.ScrollStep = value;
+			OnPropertyChanged(nameof(ScrollStep));
+		}
+	}
 
+	public bool ScrollAdjustLock {
+		get => Config.ScrollAdjustLock;
+		set {
+			Config.ScrollAdjustLock = value;
+			OnPropertyChanged(nameof(ScrollAdjustLock));
+		}
+	}
+	
+	public int ZoomAnimationFpsIndex {
+		get => Config.ZoomAnimationFpsIndex;
+		set {
+			Config.ZoomAnimationFpsIndex = value;
+			OnPropertyChanged(nameof(ZoomAnimationFpsIndex));
+		}
+	}
+	
+	public int ZoomAnimationDuration {
+		get => Config.ZoomAnimationDuration;
+		set {
+			Config.ZoomAnimationDuration = value;
+			OnPropertyChanged(nameof(ZoomAnimationDuration));
+		}
+	}
+	
 	private Keybinding? _zoomKeybinding;
 
 	public Keybinding? ZoomKeybinding {

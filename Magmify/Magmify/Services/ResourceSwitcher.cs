@@ -2,15 +2,15 @@
 
 namespace Magmify.Services;
 
-public class ResourceSwitcherService {
-	private static ResourceSwitcherService? _instance;
+public class ResourceSwitcher {
+	private static ResourceSwitcher? _instance;
 	private static readonly object InstanceLock = new();
 
-	public static ResourceSwitcherService Instance {
+	public static ResourceSwitcher Instance {
 		get {
 			lock (InstanceLock) {
 				if (_instance == null) {
-					_instance = new ResourceSwitcherService();
+					_instance = new ResourceSwitcher();
 				}
 
 				return _instance;

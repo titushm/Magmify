@@ -1,34 +1,41 @@
 ﻿using System.IO;
+using System.Runtime.Versioning;
 using Wpf.Ui.Controls;
-using Magmify.Models;
 
 namespace Magmify.Services;
 
-public sealed class LogService {
-	private static LogService? _instance;
+[SupportedOSPlatform("windows7.0")]
+public sealed class Logger {
+	private static Logger? _instance;
 	private static readonly object InstanceLock = new();
 
-	private LogService() {
-		HelperService.EnsureAppDirectory();
+	private Logger() {
+		Ensure();
 		Clear();
 	}
 
-	public static LogService Instance {
+	public static Logger Instance {
 		get {
 			lock (InstanceLock) {
 				if (_instance == null) {
-					_instance = new LogService();
+					_instance = new Logger();
 				}
 
 				return _instance;
 			}
 		}
 	}
+	
+	private void Ensure() {
+		if (!Directory.Exists(Constants.AppDirectory)) Directory.CreateDirectory(Constants.AppDirectory);
+		if (!File.Exists(Constants.LogPath)) File.Create(Constants.LogPath).Close();
+	}
 
 	public void Write(string message) {
+		Ensure();
 		try {
 			string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}{Environment.NewLine}";
-			File.AppendAllText(Info.LogPath, logMessage);
+			File.AppendAllText(Constants.LogPath, logMessage);
 		} catch (Exception ex) {
 			MessageBox msgBox = new() {
 				Title = "Log Error",
@@ -41,8 +48,8 @@ public sealed class LogService {
 
 	private void Clear() {
 		try {
-			if (File.Exists(Info.LogPath)) {
-				File.Delete(Info.LogPath);
+			if (File.Exists(Constants.LogPath)) {
+				File.Delete(Constants.LogPath);
 			}
 		} catch (Exception ex) {
 			Write("Error clearing log: " + ex);

@@ -7,52 +7,77 @@
 	xmlns:viewModels="clr-namespace:Magmify.ViewModels"
 	mc:Ignorable="d"
 	Loaded="Zoom_OnLoaded"
-	d:DesignHeight="450" d:DesignWidth="800" FontFamily="Cascadia Mono"
-	Title="{DynamicResource Page.Zoom.Title}" Background="{DynamicResource Window.Background.Secondary}"
+	d:DesignHeight="400" 
+	d:DesignWidth="750" 
+	FontFamily="Cascadia Mono"
+	Title="{DynamicResource Page.Zoom.Title}" 
+	Background="{DynamicResource Window.Background.Secondary}"
 	Foreground="{DynamicResource Text.Foreground}">
+	
 	<Page.DataContext>
 		<viewModels:ZoomViewModel/>
 	</Page.DataContext>
+	
 	<!-- Main Panel -->
-	<StackPanel Orientation="Vertical" Margin="15 5 0 0">
+	<StackPanel Orientation="Vertical" Margin="15,5,0,0">
 
 		<!-- Page Header -->
 		<StackPanel Orientation="Vertical">
-			<ui:TextBlock FontSize="20" FontWeight="Bold" Text="{DynamicResource Label.ZoomConfiguration}"/>
-			<ui:TextBlock FontSize="15" Margin="0 5 0 10" Foreground="{DynamicResource Text.Secondary.Foreground}"
-						Text="{DynamicResource Label.ConfigureZoom}"/>
-			<Border BorderBrush="{DynamicResource StatusBar.Border}" BorderThickness="0 2 0 0"/>
+			<ui:TextBlock FontSize="20" 
+						  FontWeight="Bold" 
+						  Text="{DynamicResource Label.ZoomConfiguration}"/>
+			<ui:TextBlock FontSize="15" 
+						  Margin="0,5,0,10" 
+						  Foreground="{DynamicResource Text.Secondary.Foreground}"
+						  Text="{DynamicResource Label.ConfigureZoom}"/>
+			<Border BorderBrush="{DynamicResource StatusBar.Border}" 
+					BorderThickness="0,2,0,0"/>
 		</StackPanel>
 
 		<!-- Page Content -->
-		<StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+		<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
 
 			<!-- Left Content -->
-			<StackPanel Orientation="Vertical">
+			<StackPanel Orientation="Vertical" Width="300">
 
 				<!-- Hotkeys Content -->
-				<ui:TextBlock FontSize="15" Foreground="{DynamicResource Text.Foreground}" FontWeight="Bold"
-							Text="{DynamicResource Label.Hotkeys}"/>
-				<StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+				<ui:TextBlock FontSize="15" 
+							  Foreground="{DynamicResource Text.Foreground}" 
+							  FontWeight="Bold"
+							  Text="{DynamicResource Label.Hotkeys}"/>
+				<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
 
 					<StackPanel Orientation="Vertical">
-						<ui:TextBlock FontWeight="Thin" Margin="0 0 0 5" MinWidth="100" MaxWidth="150"
-									Text="{DynamicResource Label.Keybinding}" HorizontalAlignment="Left"/>
-						<ui:TextBox PlaceholderText="{DynamicResource Label.NotSet}" IsReadOnly="True"
+						<ui:TextBlock FontWeight="Thin" 
+									  Margin="0,0,0,5" 
+									  MinWidth="100" 
+									  MaxWidth="150"
+									  Text="{DynamicResource Label.Keybinding}" 
+									  HorizontalAlignment="Left"/>
+						<ui:TextBox PlaceholderText="{DynamicResource Label.NotSet}" 
+									IsReadOnly="True"
 									PreviewKeyDown="Keybinding_OnPreviewKeyDown"
 									Text="{Binding ZoomKeybinding, Mode=OneWay}"/>
 						<StackPanel Orientation="Horizontal">
-							<ui:Button x:Name="SaveButton" Margin="0 10 10 0" Click="SaveButton_Click"
-										Content="{DynamicResource Button.Save}"/>
-							<Label x:Name="StatusLabel" Margin="0 0 0 3" VerticalAlignment="Bottom" Visibility="Hidden"
-									Foreground="{DynamicResource Text.Tertiary.Foreground}" Content="{DynamicResource Label.Unsaved}"
-									MaxWidth="200"/>
+							<ui:Button x:Name="SaveButton" 
+									   Margin="0,10,10,0" 
+									   Click="SaveButton_Click"
+									   Content="{DynamicResource Button.Save}"/>
+							<Label x:Name="StatusLabel" 
+								   Margin="0,0,0,3" 
+								   VerticalAlignment="Bottom" 
+								   Visibility="Hidden"
+								   Foreground="{DynamicResource Text.Tertiary.Foreground}" 
+								   Content="{DynamicResource Label.Unsaved}"
+								   MaxWidth="200"/>
 						</StackPanel>
 					</StackPanel>
 
-					<StackPanel Orientation="Vertical" Margin="20 0 0 0">
-						<ui:TextBlock FontWeight="Thin" Margin="0 0 0 5" Text="{DynamicResource Label.KeyMode}"/>
-						<ComboBox SelectedIndex="{Binding KeyMode}">
+					<StackPanel Orientation="Vertical" Margin="20,0,0,0">
+						<ui:TextBlock FontWeight="Thin" 
+									  Margin="0,0,0,5" 
+									  Text="{DynamicResource Label.KeyMode}"/>
+						<ComboBox SelectedIndex="{Binding KeyMode}" MinWidth="100">
 							<ComboBoxItem Content="{DynamicResource ComboBoxItem.Hold}"/>
 							<ComboBoxItem Content="{DynamicResource ComboBoxItem.Toggle}"/>
 						</ComboBox>
@@ -61,59 +86,200 @@
 				</StackPanel>
 
 				<!-- Customisation Content -->
-				<ui:TextBlock FontSize="15" Foreground="{DynamicResource Text.Foreground}" FontWeight="Bold"
-							Margin="0 20 0 0" Text="{DynamicResource Label.Customisation}"/>
-				<StackPanel Orientation="Vertical" Margin="0 10 0 0">
-					<ui:TextBlock FontWeight="Thin" Margin="0 0 0 3" Text="{DynamicResource Label.ZoomMultiplier}"/>
+				<ui:TextBlock FontSize="15" 
+							  Foreground="{DynamicResource Text.Foreground}" 
+							  FontWeight="Bold"
+							  Margin="0,20,0,0" 
+							  Text="{DynamicResource Label.Customisation}"/>
+				<StackPanel Orientation="Vertical" Margin="0,10,0,0">
+					<ui:TextBlock FontWeight="Thin" 
+								  Margin="0,0,0,3" 
+								  Text="{DynamicResource Label.ZoomFov}"/>
 
 					<StackPanel Orientation="Horizontal">
-						<Slider Name="ZoomMultiplierSlider" Value="{Binding ZoomMultiplier}" Margin="0 -3 10 0"
-								Maximum="10" Minimum="0.5" IsSnapToTickEnabled="True" TickFrequency="0.5" Width="250"/>
+						<Slider x:Name="ZoomMultiplierSlider" 
+								Value="{Binding ZoomFov}" 
+								Margin="0,-3,10,0"
+								Maximum="110" 
+								Minimum="30" 
+								IsSnapToTickEnabled="True" 
+								TickFrequency="1" 
+								Width="250"/>
 						<ui:TextBlock Text="{Binding ElementName=ZoomMultiplierSlider, Path=Value}"
-									VerticalAlignment="Center"/>
-						<ui:TextBlock Text="x" VerticalAlignment="Center"/>
+									  VerticalAlignment="Center"/>
 					</StackPanel>
 
-					<ui:TextBlock FontWeight="Thin" Margin="0 5 0 3" Text="{DynamicResource Label.ZoomSensitivity}"/>
+					<ui:TextBlock FontWeight="Thin" 
+								  Margin="0,5,0,3" 
+								  Text="{DynamicResource Label.CameraSensitivity}"/>
 
 					<StackPanel Orientation="Horizontal">
-						<Slider Name="ZoomSensitivitySlider" Value="{Binding ZoomSensitivity}" Margin="0 -3 10 0" Maximum="100"
+						<Slider x:Name="ZoomSensitivitySlider" 
+								Value="{Binding CameraSensitivity}" 
+								Margin="0,-3,10,0" 
+								Maximum="100"
 								Minimum="0"
-								IsSnapToTickEnabled="True" TickFrequency="1" Width="250"/>
+								IsSnapToTickEnabled="True" 
+								TickFrequency="1" 
+								Width="250"/>
 						<ui:TextBlock Text="{Binding ElementName=ZoomSensitivitySlider, Path=Value}"
-									VerticalAlignment="Center"/>
+									  VerticalAlignment="Center"/>
 					</StackPanel>
+					
+					<ui:TextBlock FontWeight="Thin" 
+								  Margin="0,5,0,3" 
+								  Text="{DynamicResource Label.ScrollStep}"/>
 
-
+					<StackPanel Orientation="Horizontal">
+						<Slider x:Name="ScrollStepSlider" 
+								Value="{Binding ScrollStep}" 
+								Margin="0,-3,10,0" 
+								Maximum="50"
+								Minimum="1"
+								IsSnapToTickEnabled="True" 
+								TickFrequency="1" 
+								Width="250"/>
+						<ui:TextBlock Text="{Binding ElementName=ScrollStepSlider, Path=Value}"
+									  VerticalAlignment="Center"/>
+					</StackPanel>
+					
 				</StackPanel>
 
 			</StackPanel>
 
 			<!-- Right Content -->
-			<StackPanel Orientation="Vertical" Margin="30 0 0 0">
+			<StackPanel Orientation="Vertical" Margin="30,0,0,0">
 
 				<!-- Customisation Content -->
-
-				<ui:TextBlock FontWeight="Thin" Margin="0 0 0 5" Text="{DynamicResource Label.ScrollZoom}"/>
-				<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Enabled}"
-								OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" IsChecked="{Binding ScrollZoom}"/>
-
-				<ui:TextBlock FontWeight="Thin" Margin="0 15 0 5" Text="{DynamicResource Label.HandVisibility}"/>
-				<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Visible}"
-								OffContent="{DynamicResource ToggleSwitch.Off.Hidden}" IsChecked="{Binding HandVisibility}"/>
-
-				<ui:TextBlock FontWeight="Thin" Margin="0 15 0 5" Text="{DynamicResource Label.HudVisibility}"/>
-				<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Visible}"
-								OffContent="{DynamicResource ToggleSwitch.Off.Hidden}" IsChecked="{Binding HudVisibility}"/>
-
-
-				<ui:TextBlock FontWeight="Thin" Margin="0 15 0 5" Text="{DynamicResource Label.ZoomAnimation}"/>
-				<ComboBox SelectedIndex="{Binding ZoomAnimation}">
-					<ComboBoxItem Content="{DynamicResource ComboBoxItem.None}"/>
-					<ComboBoxItem Content="{DynamicResource ComboBoxItem.EaseInOut}"/>
-					<ComboBoxItem Content="{DynamicResource ComboBoxItem.Elastic}"/>
-				</ComboBox>
-
+				<StackPanel Orientation="Horizontal">
+					<StackPanel Orientation="Vertical">
+						<StackPanel Orientation="Horizontal">
+							<ui:TextBlock FontWeight="Thin" 
+										  Margin="0,0,0,5" 
+										  Text="{DynamicResource Label.ScrollAdjust}"/>
+							<ui:TextBlock FontWeight="SemiBold" 
+										  Margin="3,0,0,0" 
+										  Text="*" 
+										  Foreground="{DynamicResource Text.Tertiary.Foreground}" 
+										  Width="10">
+								<ui:TextBlock.ToolTip>
+									<ToolTip>
+										<StackPanel Orientation="Vertical">
+											<TextBlock Text="{DynamicResource Label.IntensiveSetting}"/>
+											<TextBlock Text="{DynamicResource Label.IntensiveSettingTip}" 
+													   FontWeight="Thin"/>
+										</StackPanel>
+									</ToolTip>
+								</ui:TextBlock.ToolTip>
+							</ui:TextBlock>
+						</StackPanel>
+						
+						<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Enabled}" 
+										 MinWidth="120"
+										 OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" 
+										 IsChecked="{Binding ScrollAdjust}"/>
+					</StackPanel>
+					
+					<StackPanel Orientation="Vertical" Margin="30,0,0,0">
+						<ui:TextBlock FontWeight="Thin" 
+									  Margin="0,0,0,5" 
+									  Text="{DynamicResource Label.ScrollAdjustLock}"/>
+						<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Enabled}"
+										 OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" 
+										 IsChecked="{Binding ScrollAdjustLock}"/>
+					</StackPanel>
+				</StackPanel>
+				
+				<StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+					<StackPanel Orientation="Vertical">
+						<ui:TextBlock FontWeight="Thin" 
+									  Margin="0,0,0,5" 
+									  Text="{DynamicResource Label.HideHand}"/>
+						<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.Off.Hidden}" 
+										 MinWidth="120" 
+										 OffContent="{DynamicResource ToggleSwitch.On.Visible}" 
+										 IsChecked="{Binding HideHand}"/>
+					</StackPanel>
+					
+					<StackPanel Orientation="Vertical" Margin="30,0,0,0">
+						<ui:TextBlock FontWeight="Thin" 
+									  Margin="0,0,0,5" 
+									  Text="{DynamicResource Label.HideHud}"/>
+						<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.Off.Hidden}" 
+										 OffContent="{DynamicResource ToggleSwitch.On.Visible}" 
+										 IsChecked="{Binding HideHud}"/>
+					</StackPanel>
+				</StackPanel>
+				
+				<StackPanel Orientation="Vertical">
+					<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+						<ui:TextBlock FontWeight="Thin" 
+									  Margin="0,0,0,5" 
+									  Text="{DynamicResource Label.ZoomAnimation}"/>
+						<ui:TextBlock FontWeight="SemiBold" 
+									  Margin="3,0,0,0" 
+									  Text="*" 
+									  Foreground="{DynamicResource Text.Tertiary.Foreground}" 
+									  Width="10">
+							<ui:TextBlock.ToolTip>
+								<ToolTip>
+									<StackPanel Orientation="Vertical">
+										<TextBlock Text="{DynamicResource Label.IntensiveSetting}"/>
+										<TextBlock Text="{DynamicResource Label.IntensiveSettingTip}" 
+												   FontWeight="Thin"/>
+									</StackPanel>
+								</ToolTip>
+							</ui:TextBlock.ToolTip>
+						</ui:TextBlock>
+					</StackPanel>
+					
+					<StackPanel Orientation="Vertical">
+						<ComboBox SelectedIndex="{Binding ZoomAnimation}" 
+								  HorizontalAlignment="Left">
+							<ComboBoxItem Content="{DynamicResource ComboBoxItem.EaseInOut}"/>
+							<ComboBoxItem Content="{DynamicResource ComboBoxItem.Elastic}"/>
+							<ComboBoxItem Content="{DynamicResource ComboBoxItem.EaseInOutQuart}"/>
+							<ComboBoxItem Content="{DynamicResource ComboBoxItem.None}"/>
+						</ComboBox>
+					</StackPanel>
+					
+					<ui:TextBlock FontWeight="Thin" 
+								  Margin="0,15,0,5" 
+								  Text="{DynamicResource Label.ZoomAnimationFps}"/>
+					<StackPanel Orientation="Vertical">
+						<ComboBox SelectedIndex="{Binding ZoomAnimationFpsIndex}" 
+								  Margin="0,0,0,0" 
+								  Width="100" 
+								  HorizontalAlignment="Left">
+							<ComboBoxItem Content="15FPS"/>
+							<ComboBoxItem Content="30FPS"/>
+							<ComboBoxItem Content="60FPS"/>
+							<ComboBoxItem Content="120FPS"/>
+							<ComboBoxItem Content="165FPS"/>
+							<ComboBoxItem Content="240FPS"/>
+						</ComboBox>
+					</StackPanel>
+					
+					<ui:TextBlock FontWeight="Thin" 
+								  Margin="0,15,0,5" 
+								  Text="{DynamicResource Label.ZoomAnimationDuration}"/>
+					<StackPanel Orientation="Horizontal">
+						<Slider x:Name="ZoomAnimationDurationSlider" 
+								Value="{Binding ZoomAnimationDuration}" 
+								Margin="0,-3,10,0"
+								Maximum="500" 
+								Minimum="50" 
+								IsSnapToTickEnabled="True" 
+								TickFrequency="10" 
+								Width="250"/>
+						<ui:TextBlock Text="{Binding ElementName=ZoomAnimationDurationSlider, Path=Value}" 
+									  VerticalAlignment="Center"/>
+						<ui:TextBlock Text="ms" 
+									  VerticalAlignment="Center"/>
+					</StackPanel>
+					
+				</StackPanel>
+				
 			</StackPanel>
 
 		</StackPanel>

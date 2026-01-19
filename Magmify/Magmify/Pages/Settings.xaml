@@ -6,83 +6,131 @@
 	xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
 	xmlns:viewModels="clr-namespace:Magmify.ViewModels"
 	mc:Ignorable="d"
-	d:DesignHeight="450" d:DesignWidth="800" FontFamily="Cascadia Mono"
-	Title="{DynamicResource Page.Settings.Title}" Background="{DynamicResource Window.Background.Secondary}"
+	d:DesignHeight="450" 
+	d:DesignWidth="800" 
+	FontFamily="Cascadia Mono"
+	Title="{DynamicResource Page.Settings.Title}" 
+	Background="{DynamicResource Window.Background.Secondary}"
 	Foreground="{DynamicResource Text.Foreground}">
+	
 	<Page.DataContext>
 		<viewModels:SettingsViewModel/>
 	</Page.DataContext>
+	
 	<!-- Main Panel -->
-	<StackPanel Orientation="Vertical" Margin="15 5 0 0">
+	<StackPanel Orientation="Vertical" Margin="15,5,0,0">
 
 		<!-- Page Header -->
 		<StackPanel Orientation="Vertical">
-			<ui:TextBlock FontSize="20" FontWeight="Bold" Text="{DynamicResource Label.AppInfo}" Margin="0 0 0 5"/>
-			<Border BorderBrush="{DynamicResource StatusBar.Border}" BorderThickness="0 2 0 0"/>
+			<ui:TextBlock FontSize="20" 
+						  FontWeight="Bold" 
+						  Text="{DynamicResource Label.AppInfo}" 
+						  Margin="0,0,0,5"/>
+			<Border BorderBrush="{DynamicResource StatusBar.Border}" 
+					BorderThickness="0,2,0,0"/>
 		</StackPanel>
 
 		<!-- Page Content -->
-		<StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+		<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
 
 			<!-- Left Content -->
 			<StackPanel Orientation="Vertical" Width="200">
 
 				<!-- General Content -->
-				<ui:TextBlock FontSize="15" Foreground="{DynamicResource Text.Foreground}" FontWeight="Bold"
-							Text="{DynamicResource Label.General}"/>
+				<ui:TextBlock FontSize="15" 
+							  Foreground="{DynamicResource Text.Foreground}" 
+							  FontWeight="Bold"
+							  Text="{DynamicResource Label.General}"/>
 
-				<ui:TextBlock FontWeight="Thin" Margin="0 10 0 5" Text="{DynamicResource Label.Theme}"/>
+				<ui:TextBlock FontWeight="Thin" 
+							  Margin="0,10,0,5" 
+							  Text="{DynamicResource Label.Theme}"/>
 				<ComboBox SelectedIndex="{Binding IsDarkTheme}">
 					<ComboBoxItem Content="{DynamicResource ComboBoxItem.Light}"/>
 					<ComboBoxItem Content="{DynamicResource ComboBoxItem.Dark}"/>
 				</ComboBox>
 
-				<ui:TextBlock FontWeight="Thin" Margin="0 10 0 5" Text="{DynamicResource Label.Language}"/>
-				<ComboBox
-					ItemsSource="{Binding Languages}"
-					SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}"
-					SelectedValuePath="Key"
-					DisplayMemberPath="Value"/>
+				<ui:TextBlock FontWeight="Thin" 
+							  Margin="0,10,0,5" 
+							  Text="{DynamicResource Label.Language}"/>
+				<ComboBox ItemsSource="{Binding Languages}"
+						  SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}"
+						  SelectedValuePath="Key"
+						  DisplayMemberPath="Value"/>
 
-				<ui:TextBlock FontWeight="Thin" Margin="0 10 0 5" Text="{DynamicResource Label.RunOnStartup}"/>
+				<ui:TextBlock FontWeight="Thin" 
+							  Margin="0,10,0,5" 
+							  Text="{DynamicResource Label.RunOnStartup}"/>
 				<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Enabled}"
-								OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" IsChecked="{Binding RunOnStartup}"/>
+								 OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" 
+								 IsChecked="{Binding RunOnStartup}"/>
 
-				<ui:TextBlock FontWeight="Thin" Margin="0 10 0 5" Text="{DynamicResource Label.CloseToTray}"/>
+				<ui:TextBlock FontWeight="Thin" 
+							  Margin="0,10,0,5" 
+							  Text="{DynamicResource Label.CloseToTray}"/>
 				<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Enabled}"
-								OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" IsChecked="{Binding CloseToTray}"/>
+								 OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" 
+								 IsChecked="{Binding CloseToTray}"/>
 
-				<ui:TextBlock FontWeight="Thin" Margin="0 10 0 5" Text="{DynamicResource Label.StartHidden}"/>
+				<ui:TextBlock FontWeight="Thin" 
+							  Margin="0,10,0,5" 
+							  Text="{DynamicResource Label.StartHidden}"/>
 				<ui:ToggleSwitch OnContent="{DynamicResource ToggleSwitch.On.Enabled}"
-								OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" IsChecked="{Binding StartHidden}"/>
+								 OffContent="{DynamicResource ToggleSwitch.Off.Disabled}" 
+								 IsChecked="{Binding StartHidden}"/>
 
 			</StackPanel>
 
 			<!-- Right Content -->
-			<StackPanel Orientation="Vertical" Margin="30 0 0 0">
+			<StackPanel Orientation="Vertical" Margin="30,0,0,0">
 
+				<ui:TextBlock FontWeight="Thin" 
+							  Margin="0,30,0,5" 
+							  Text="{DynamicResource Label.InstallLocation}"/>
+				<ui:Button ToolTip="{Binding MinecraftInstallLocation}" 
+						   Margin="0,0,10,0" 
+						   Foreground="{DynamicResource Text.Foreground}" 
+						   Click="PickLocation_OnClick" 
+						   Content="{DynamicResource Button.PickLocation}"/>
+				
 				<!-- Info Content -->
-				<ui:TextBlock FontSize="15" Foreground="{DynamicResource Text.Foreground}" FontWeight="Bold"
-							Text="{DynamicResource Label.AppInfo}"/>
+				<ui:TextBlock FontSize="15" 
+							  Margin="0,20,0,0" 
+							  Foreground="{DynamicResource Text.Foreground}" 
+							  FontWeight="Bold"
+							  Text="{DynamicResource Label.AppInfo}"/>
 
-				<StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-
-					<ui:TextBlock FontWeight="Thin" Text="{DynamicResource Label.AppVersion}"/>
-					<ui:TextBlock FontWeight="Thin" Text="{Binding AppVersion}"/>
+				<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+					<ui:TextBlock FontWeight="Thin" 
+								  Text="{DynamicResource Label.AppVersion}"/>
+					<ui:TextBlock FontWeight="Thin" 
+								  Text="{Binding AppVersion}"/>
 				</StackPanel>
 
 				<StackPanel Orientation="Horizontal">
-
-					<ui:TextBlock FontWeight="Thin" VerticalAlignment="Center" Text="{DynamicResource Label.IconsBy}"/>
-					<ui:HyperlinkButton NavigateUri="https://akveo.github.io/eva-icons/" FontWeight="Thin"
-										Content="{DynamicResource Hyperlink.EvaIcons}"/>
+					<ui:TextBlock FontWeight="Thin" 
+								  VerticalAlignment="Center" 
+								  Margin="0,0,10,0" 
+								  Text="{DynamicResource Label.IconsBy}"/>
+					<ui:Button FontWeight="Thin" 
+							   Padding="0" 
+							   Content="{DynamicResource Hyperlink.EvaIcons}"/>
 				</StackPanel>
 
 				<!-- Debug Content -->
-				<ui:TextBlock FontSize="15" Foreground="{DynamicResource Text.Foreground}" Margin="0 10 0 0" FontWeight="Bold"
-							Text="{DynamicResource Label.Debug}"/>
-				<ui:Button Foreground="{DynamicResource Text.Foreground}" Margin="0 5 0 0" Click="OpenLog_OnClick"
-							Content="{DynamicResource Button.OpenLogFile}"/>
+				<ui:TextBlock FontSize="15" 
+							  Foreground="{DynamicResource Text.Foreground}" 
+							  Margin="0,10,0,0" 
+							  FontWeight="Bold"
+							  Text="{DynamicResource Label.Debug}"/>
+				<ui:Button Foreground="{DynamicResource Text.Foreground}" 
+						   Margin="0,5,0,0" 
+						   Click="OpenLog_OnClick"
+						   Content="{DynamicResource Button.OpenLogFile}"/>
+				<ui:Button Foreground="{DynamicResource Text.Foreground}" 
+						   Margin="0,10,0,0" 
+						   Click="ResetPointers_OnClick"
+						   Content="{DynamicResource Button.ResetPointers}"/>
 			</StackPanel>
 
 		</StackPanel>
