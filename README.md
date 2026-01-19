@@ -6,11 +6,9 @@ An external Minecraft Bedrock zoom mod.
   <img src="assets/magmify-dark.png" width="48%"/>
   <img src="assets/magmify-light.png" width="48%"/>
 </p>
-<p align="center">
-  <video controls width="97%">
-      <source src="assets/magmify-demo.mp4" type="video/mp4">
-  </video>
-</p>
+
+https://github.com/user-attachments/assets/5ccceab0-9c74-4d49-9651-4843cc9a82b1
+
 
 ## Features
 
