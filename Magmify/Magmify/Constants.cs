@@ -6,6 +6,7 @@ namespace Magmify;
 [SupportedOSPlatform("windows7.0")]
 public static class Constants {
 	public const string AppName = "Magmify";
+	public const string AppGuid = "43f4cd6f-4faf-409e-95c4-5aaa6fb67cb1";
 	public const string AppVersion = "1.0.0";
 	public const string AppStartupName = "Magmify Startup";
 	public const string RepoUrl = "https://api.github.com/repos/titushm/Magmify";
