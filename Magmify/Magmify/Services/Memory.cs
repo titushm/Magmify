@@ -4,9 +4,10 @@ using System.Runtime.InteropServices;
 namespace Magmify.Services;
 
 public class Memory {
-	private Process? _process;
-	private IntPtr _processHandle;
-	private readonly Action _invalidMemoryCallback;
+	private static Memory? _instance;
+	private static readonly object InstanceLock = new();
+	private static Process? _process;
+	private static IntPtr _processHandle;
 
 	[DllImport("kernel32.dll")]
 	static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -19,13 +20,23 @@ public class Memory {
 	static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize,
 		out int lpNumberOfBytesWritten);
 
-	public Memory(Action invalidMemoryCallback) {
-		_invalidMemoryCallback = invalidMemoryCallback;
+	private Memory() {
 		bool success = Attach();
 		if (!success) {
 			Logger.Instance.Write("Failed to attach to Minecraft process.");
 		}
-		
+	}
+	
+	public static Memory Instance {
+		get {
+			lock (InstanceLock) {
+				if (_instance == null) {
+					_instance = new Memory();
+				}
+
+				return _instance;
+			}
+		}
 	}
 	
 	public bool Attach() {
@@ -60,7 +71,7 @@ public class Memory {
 		int size = Marshal.SizeOf<T>();
 		byte[] buffer = new byte[size];
 		ReadProcessMemory(_processHandle, address, buffer, size, out int bytesRead);
-		if (bytesRead == 0) _invalidMemoryCallback();
+		if (bytesRead == 0) Logger.Instance.Write($"Failed to read bytes of {typeof(T).Name}");
 		T value = Marshal.PtrToStructure<T>(Marshal.UnsafeAddrOfPinnedArrayElement(buffer, 0));
 		return value;
 	}
@@ -70,7 +81,7 @@ public class Memory {
 		byte[] buffer = new byte[size];
 		Marshal.StructureToPtr(value, Marshal.UnsafeAddrOfPinnedArrayElement(buffer, 0), false);
 		WriteProcessMemory(_processHandle, address, buffer, size, out int bytesWritten);
-		if (bytesWritten == 0) _invalidMemoryCallback();
+		if (bytesWritten == 0) Logger.Instance.Write($"Failed to write bytes of {typeof(T).Name}");
 	}
 	
 	public IntPtr ResolvePointer(string moduleName, List<int> offsets) {

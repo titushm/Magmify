@@ -9,8 +9,6 @@ public static class Zoom {
 	public static MemoryState? InitialState;
 	public static float AdjustedFov;
 	private static CancellationTokenSource? _zoomCts;
-	private static Addresses? _addressCache;
-	private static Memory? _memory;
 	private static float? _fovOverride;
 	
 	public static void Initialise() {
@@ -21,55 +19,42 @@ public static class Zoom {
 		}
 		Database.GetDatabase().pointers.TryGetValue(version.ToString(), out Pointers);
 		Helper.OnUpdateStatusLabel?.Invoke(null, EventArgs.Empty);
-		_memory = new Memory(InvalidMemoryHandler);
 	}
 	
-	private static void InvalidMemoryHandler() {
-		Logger.Instance.Write("Memory was invalid, resetting address cache");
-		_addressCache = null;
-	}
-	
-	private static void ResolveAddresses() {
-	if (_addressCache != null) return;
-
-	if (_memory == null || Pointers == null) {
-		Logger.Instance.Write("Failed to resolve addresses: memory or pointers not initialized");
-		return;
-	}
-
-	IntPtr Resolve(string name, List<int> offsets) {
-		try {
-			IntPtr ptr = _memory!.ResolvePointer(Constants.ModuleName, offsets);
-			if (ptr == IntPtr.Zero) {
-				var msg = $"Failed to resolve {name} pointer. Module: {Constants.ModuleName}; Offsets: {string.Join(", ", offsets)}";
-				Logger.Instance.Write(msg);
-				Helper.ShowMessageBox("Invalid Pointer", msg);
-			}
-			return ptr;
-		} catch (Exception ex) {
-			var msg = $"Exception while resolving {name}: {ex.Message}";
-			Logger.Instance.Write(msg);
-			return IntPtr.Zero;
+	private static Addresses? ResolveAddresses() {
+		if (Pointers == null) {
+			Logger.Instance.Write("Failed to resolve addresses: pointers not initialized");
+			return null;
 		}
+
+		IntPtr Resolve(string name, List<int> offsets) {
+			try {
+				IntPtr ptr = Memory.Instance.ResolvePointer(Constants.ModuleName, offsets);
+				if (ptr == IntPtr.Zero) {
+					Logger.Instance.Write( $"Failed to resolve {name} pointer. Module: {Constants.ModuleName}; Offsets: {string.Join(", ", offsets)}");
+				}
+				return ptr;
+			} catch (Exception ex) {
+				Logger.Instance.Write($"Exception while resolving {name}: {ex.Message}");
+				return IntPtr.Zero;
+			}
+		}
+
+		var fovPointer = Resolve("FOV", Pointers.fov.ToList());
+		var cameraSensitivityPointer = Resolve("Camera Sensitivity", Pointers.camera_sensitivity.ToList());
+		var handVisibilityPointer = Resolve("Hand Visibility", Pointers.hand_visibility.ToList());
+		var hudVisibilityPointer = Resolve("HUD Visibility", Pointers.hud_visibility.ToList());
+
+		if (fovPointer == IntPtr.Zero || cameraSensitivityPointer == IntPtr.Zero || handVisibilityPointer == IntPtr.Zero || hudVisibilityPointer == IntPtr.Zero) {
+			Logger.Instance.Write("Address resolution failed");
+			return null;
+		}
+		
+		return new Addresses(fovPointer, cameraSensitivityPointer, handVisibilityPointer, hudVisibilityPointer);
 	}
-
-	var fovPointer = Resolve("FOV", Pointers.fov.ToList());
-	var cameraSensitivityPointer = Resolve("Camera Sensitivity", Pointers.camera_sensitivity.ToList());
-	var handVisibilityPointer = Resolve("Hand Visibility", Pointers.hand_visibility.ToList());
-	var hudVisibilityPointer = Resolve("HUD Visibility", Pointers.hud_visibility.ToList());
-	var selectedSlotPointer = Resolve("Selected Slot", Pointers.selected_slot.ToList());
-
-	if (fovPointer == IntPtr.Zero || cameraSensitivityPointer == IntPtr.Zero || handVisibilityPointer == IntPtr.Zero || hudVisibilityPointer == IntPtr.Zero || selectedSlotPointer == IntPtr.Zero) {
-		Logger.Instance.Write("Address resolution failed; address cache not created");
-		return;
-	}
-
-	_addressCache = new Addresses(fovPointer, cameraSensitivityPointer, handVisibilityPointer, hudVisibilityPointer, selectedSlotPointer);
-	Logger.Instance.Write("Address cache resolved successfully");
-}
 
 	private static bool Ensure() {
-		return _memory!.Attach() && Pointers != null;
+		return Memory.Instance.Attach() && Pointers != null;
 	}
 	
 	private static void CancelZoomAnimation() {
@@ -83,7 +68,7 @@ public static class Zoom {
 	private static void StartAnimation(IntPtr address, float startingValue, float targetValue, EasingType easingType) {
 		if (easingType == EasingType.None) {
 			try {
-				_memory!.WriteMemory(address, targetValue);
+				Memory.Instance.WriteMemory(address, targetValue);
 			} catch (Exception ex) {
 				Logger.Instance.Write($"Zoom write error: {ex}");
 			}
@@ -98,7 +83,7 @@ public static class Zoom {
 				await Animation.AnimateAsync(easingType, startingValue, targetValue, TimeSpan.FromMilliseconds(Config.ZoomAnimationDuration), value => {
 					try {
 						_fovOverride = value;
-						_memory!.WriteMemory(address, value); 
+						Memory.Instance.WriteMemory(address, value); 
 					}
 					catch { /* ignore */ }
 				}, token).ConfigureAwait(false);
@@ -119,49 +104,48 @@ public static class Zoom {
 
 	public static void AdjustZoom(int steps) {
 		if (!Ensure()) return;
-		IntPtr fovAddress = _memory!.ResolvePointer(Constants.ModuleName, Pointers!.fov.ToList());
-		float fov = _fovOverride ?? _memory.ReadMemory<float>(fovAddress);
+		IntPtr fovAddress = Memory.Instance.ResolvePointer(Constants.ModuleName, Pointers!.fov.ToList());
+		float fov = _fovOverride ?? Memory.Instance.ReadMemory<float>(fovAddress);
 		float adjustment = Config.ScrollStep * steps;
 		float targetFov = Math.Clamp(fov + adjustment, 30, 110);
 		AdjustedFov = targetFov;
-		_memory.WriteMemory(fovAddress, targetFov);
+		Memory.Instance.WriteMemory(fovAddress, targetFov);
 	}
 
 	public static void SetZoom(bool enable) {
 		if (!Ensure()) return;
-		if (_addressCache == null) ResolveAddresses();
-		
+		Addresses? _addresses = ResolveAddresses();
+		if (_addresses == null) return;
 		CancelZoomAnimation();
 		
 		if (enable) {
 			InitialState ??= new MemoryState(
-				_fovOverride ?? _memory!.ReadMemory<float>(_addressCache!.FovAddress),
-				_memory!.ReadMemory<float>(_addressCache!.CameraSensitivityAddress),
-				_memory.ReadMemory<bool>(_addressCache.HandVisibilityAddress),
-				_memory.ReadMemory<bool>(_addressCache.HudVisibilityAddress),
-				_memory.ReadMemory<int>(_addressCache.SelectedSlotAddress)
+				_fovOverride ?? Memory.Instance.ReadMemory<float>(_addresses.FovAddress),
+				Memory.Instance.ReadMemory<float>(_addresses.CameraSensitivityAddress),
+				Memory.Instance.ReadMemory<bool>(_addresses.HandVisibilityAddress),
+				Memory.Instance.ReadMemory<bool>(_addresses.HudVisibilityAddress)
 			);
 			
 			if (!Config.ScrollAdjustLock) AdjustedFov = 0;
 	
-			_memory!.WriteMemory(_addressCache!.HandVisibilityAddress, Config.HideHand);
-			_memory.WriteMemory(_addressCache.HudVisibilityAddress, Config.HideHud);
-			_memory.WriteMemory(_addressCache.CameraSensitivityAddress, Config.CameraSensitivity / 100f);
+			Memory.Instance.WriteMemory(_addresses.HandVisibilityAddress, Config.HideHand);
+			Memory.Instance.WriteMemory(_addresses.HudVisibilityAddress, Config.HideHud);
+			Memory.Instance.WriteMemory(_addresses.CameraSensitivityAddress, Config.CameraSensitivity / 100f);
 
 		} else {
 			if (InitialState == null) return;
 			
-			_memory!.WriteMemory(_addressCache!.HandVisibilityAddress, InitialState.HandVisibility);
-			_memory.WriteMemory(_addressCache.HudVisibilityAddress, InitialState.HudVisibility);
-			_memory.WriteMemory(_addressCache.CameraSensitivityAddress, InitialState.CameraSensitivity);
+			Memory.Instance.WriteMemory(_addresses.HandVisibilityAddress, InitialState.HandVisibility);
+			Memory.Instance.WriteMemory(_addresses.HudVisibilityAddress, InitialState.HudVisibility);
+			Memory.Instance.WriteMemory(_addresses.CameraSensitivityAddress, InitialState.CameraSensitivity);
 
 			CancelZoomAnimation();
 			
 		}
 
-		if (Config.HideHud) {
-			int currentSlot = _memory.ReadMemory<int>(_addressCache.SelectedSlotAddress);
-			try { KeyInjector.SendKeypress(0x30 + currentSlot + 1); } catch { /* ignore */ }
+		if (Config.HideHud || Config.HideHand) {
+			KeyInjector.SendKeypress(0x70); // Force HUD/hand refresh (F1)
+			KeyInjector.SendKeypress(0x70); // Toggle back
 		}
 
 		float targetFov = enable
@@ -170,8 +154,8 @@ public static class Zoom {
 				: Config.ZoomFov
 			: InitialState.Fov;
 		
-		float currentCurrentFov = _fovOverride ?? _memory.ReadMemory<float>(_addressCache.FovAddress);
-		StartAnimation(_addressCache.FovAddress, 
+		float currentCurrentFov = _fovOverride ?? Memory.Instance.ReadMemory<float>(_addresses.FovAddress);
+		StartAnimation(_addresses.FovAddress, 
 			currentCurrentFov,
 			targetFov, 
 			Animation.FromIndex(Config.ZoomAnimationIndex)

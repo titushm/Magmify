@@ -190,10 +190,9 @@ public partial class HookHandler {
 		int eventType = wParam.ToInt32();
 		if (eventType != (int)KeyType.WmMousewheel || !_isZoomed || Zoom.Pointers == null)
 			return CallNextHookEx(_mouseHookId, nCode, wParam, lParam);
-
+		KeyInjector.SendKeypress(0x31); // TODO: Ideally we would want to find the actual selected hotbar slot (couldnt find a stable pointer) . This is a workaround to prevent hotbar scrolling while zoomed.
 		var mouseData = Marshal.PtrToStructure<Msllhookstruct>(lParam);
 		short scrollDelta = (short)((mouseData.mouseData >> 16) & 0xFFFF);
-		KeyInjector.SendKeypress(0x30 + Zoom.InitialState!.InitialSlot + 1); // Force refresh by re-selecting current slot (0x30 is 0 Key. Zero-indexed so add 1)
 		_scrollBucket += scrollDelta > 0 ? -1 : 1; // Accumulate small scrolls
 		float timeSinceLastEvent = Environment.TickCount - _lastScrollEventEpoch;
 		if (timeSinceLastEvent < 50) return CallNextHookEx(_mouseHookId, nCode, wParam, lParam);
